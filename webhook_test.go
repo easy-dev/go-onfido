@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/uw-labs/go-onfido"
+	"github.com/easy-dev/go-onfido"
 )
 
 func TestNewWebhookFromEnv_MissingToken(t *testing.T) {

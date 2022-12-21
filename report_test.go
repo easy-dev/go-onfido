@@ -7,9 +7,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/easy-dev/go-onfido"
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
-	"github.com/uw-labs/go-onfido"
 )
 
 func TestGetReport_NonOKResponse(t *testing.T) {

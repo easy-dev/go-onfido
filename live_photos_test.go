@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/easy-dev/go-onfido"
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
-	"github.com/uw-labs/go-onfido"
 )
 
 func TestLivePhotos_List(t *testing.T) {

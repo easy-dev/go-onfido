@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 package onfido_test
@@ -9,8 +10,8 @@ import (
 	"path/filepath"
 	"testing"
 
+	onfido "github.com/easy-dev/go-onfido"
 	"github.com/stretchr/testify/assert"
-	onfido "github.com/uw-labs/go-onfido"
 )
 
 var (
