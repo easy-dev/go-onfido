@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"time"
 )
 
 // Constants
@@ -35,11 +36,44 @@ type WebhookRequest struct {
 		ResourceType string `json:"resource_type"`
 		Action       string `json:"action"`
 		Object       struct {
-			ID          string `json:"id"`
-			Status      string `json:"status"`
-			CompletedAt string `json:"completed_at"`
-			Href        string `json:"href"`
+			ID                 string    `json:"id"`
+			Status             string    `json:"status"`
+			CompletedAtIso8601 time.Time `json:"completed_at_iso8601"`
+			Href               string    `json:"href"`
 		} `json:"object"`
+		Resource struct {
+			CreatedAt time.Time   `json:"created_at"`
+			Error     interface{} `json:"error"`
+			Link      struct {
+				CompletedRedirectURL interface{} `json:"completed_redirect_url"`
+				URL                  string      `json:"url"`
+				Language             interface{} `json:"language"`
+				ExpiresAt            interface{} `json:"expires_at"`
+				ExpiredRedirectURL   interface{} `json:"expired_redirect_url"`
+			} `json:"link"`
+			UpdatedAt  time.Time `json:"updated_at"`
+			WorkflowID string    `json:"workflow_id"`
+			Status     string    `json:"status"`
+			Output     struct {
+				DateOfBirth            string `json:"date_of_birth"`
+				DocumentIssuingCountry string `json:"document_issuing_country"`
+				DocumentMediaIds       []struct {
+					ID string `json:"id"`
+				} `json:"document_media_ids"`
+				DocumentNumber string `json:"document_number"`
+				DocumentType   string `json:"document_type"`
+				FirstName      string `json:"first_name"`
+				LastName       string `json:"last_name"`
+				SelfieMediaIds []struct {
+					ID string `json:"id"`
+				} `json:"selfie_media_ids"`
+			} `json:"output"`
+			DashboardURL      string        `json:"dashboard_url"`
+			WorkflowVersionID int           `json:"workflow_version_id"`
+			ID                string        `json:"id"`
+			ApplicantID       string        `json:"applicant_id"`
+			Reasons           []interface{} `json:"reasons"`
+		} `json:"resource"`
 	} `json:"payload"`
 }
 
