@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"time"
 )
 
 type WorkflowRun struct {
@@ -12,7 +13,24 @@ type WorkflowRun struct {
 }
 
 type Workflow struct {
-	Id string `json:"id"`
+	ApplicantID  string      `json:"applicant_id"`
+	CreatedAt    time.Time   `json:"created_at"`
+	DashboardURL string      `json:"dashboard_url"`
+	Error        interface{} `json:"error"`
+	ID           string      `json:"id"`
+	Link         struct {
+		CompletedRedirectURL interface{} `json:"completed_redirect_url"`
+		ExpiredRedirectURL   interface{} `json:"expired_redirect_url"`
+		ExpiresAt            interface{} `json:"expires_at"`
+		Language             interface{} `json:"language"`
+		URL                  string      `json:"url"`
+	} `json:"link"`
+	Output            interface{}   `json:"output"`
+	Reasons           []interface{} `json:"reasons"`
+	Status            string        `json:"status"`
+	UpdatedAt         time.Time     `json:"updated_at"`
+	WorkflowID        string        `json:"workflow_id"`
+	WorkflowVersionID int           `json:"workflow_version_id"`
 }
 
 func (c *Client) CreateWorkflowRun(ctx context.Context, a WorkflowRun) (*Workflow, error) {
