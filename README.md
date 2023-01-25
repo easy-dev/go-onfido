@@ -1,34 +1,4 @@
-# go-onfido [![CircleCI](https://circleci.com/gh/uw-labs/go-onfido.svg?style=svg)](https://circleci.com/gh/uw-labs/go-onfido) [![Go Report Card](https://goreportcard.com/badge/github.com/easy-dev/go-onfido)](https://goreportcard.com/report/github.com/easy-dev/go-onfido)
+# go-onfido
+Client for the [Onfido API] version **v3** (https://documentation.onfido.com/)
 
-Client for the [Onfido API](https://documentation.onfido.com/)
-
-[![go-doc](https://godoc.org/github.com/easy-dev/go-onfido?status.svg)](https://godoc.org/github.com/easy-dev/go-onfido)
-
-> This library was built for Utility Warehouse internal projects, so priority was given to supporting the
-features we needed. If the library is missing a feature from the API, raise an issue or ideally open a PR.
-
-## Installation
-
-To install go-onfido, use `go get`:
-
-```
-go get github.com/easy-dev/go-onfido
-```
-
-## Usage
-
-First you're going to need to instantiate a client (grab your [sandbox API key](https://onfido.com/dashboard/v2/#/api/tokens))
-
-```golang
-client := onfido.NewClient("test_123")
-```
-
-Or you can instantiate usign the env variable `ONFIDO_TOKEN`
-
-```golang
-client, err := onfido.NewClientFromEnv()
-```
-
-Now checkout some of the [examples](https://github.com/easy-dev/go-onfido/tree/master/examples)
-
-
+This library was a fork of [go-onfido](https://github.com/uw-labs/go-onfido) which supports the v2 onfido api. It is not compatible with the original library.

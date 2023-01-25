@@ -8,8 +8,8 @@ import (
 )
 
 type WorkflowRun struct {
-	WorkflowId  string `json:"workflow_id"`
-	ApplicantId string `json:"applicant_id"`
+	WorkflowID  string `json:"workflow_id"`
+	ApplicantID string `json:"applicant_id"`
 }
 
 type Workflow struct {

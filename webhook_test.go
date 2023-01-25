@@ -2,7 +2,7 @@ package onfido_test
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"testing"
@@ -58,7 +58,7 @@ func TestParseFromRequest_InvalidSignature(t *testing.T) {
 		Header: make(map[string][]string),
 	}
 	req.Header.Add(onfido.WebhookSignatureHeader, "123")
-	req.Body = ioutil.NopCloser(bytes.NewBuffer([]byte("{\"msg\": \"hello world\"}")))
+	req.Body = io.NopCloser(bytes.NewBuffer([]byte("{\"msg\": \"hello world\"}")))
 
 	wh := onfido.Webhook{Token: "abc123"}
 	_, err := wh.ParseFromRequest(req)
@@ -74,7 +74,7 @@ func TestParseFromRequest_SkipSignatureValidation(t *testing.T) {
 	req := &http.Request{
 		Header: make(map[string][]string),
 	}
-	req.Body = ioutil.NopCloser(bytes.NewBuffer([]byte("{\"msg\": \"hello world\"}")))
+	req.Body = io.NopCloser(bytes.NewBuffer([]byte("{\"msg\": \"hello world\"}")))
 
 	wh := onfido.Webhook{Token: "abc123", SkipSignatureValidation: true}
 	_, err := wh.ParseFromRequest(req)
@@ -88,7 +88,7 @@ func TestParseFromRequest_InvalidJson(t *testing.T) {
 		Header: make(map[string][]string),
 	}
 	req.Header.Add(onfido.WebhookSignatureHeader, "d4163f7af2256fae6ab72cb595d3f9d1dfc6fecc")
-	req.Body = ioutil.NopCloser(bytes.NewBuffer([]byte("{\"msg\": \"hello world")))
+	req.Body = io.NopCloser(bytes.NewBuffer([]byte("{\"msg\": \"hello world")))
 
 	wh := onfido.Webhook{Token: "abc123"}
 	_, err := wh.ParseFromRequest(req)
@@ -102,7 +102,7 @@ func TestParseFromRequest_ValidSignature(t *testing.T) {
 		Header: make(map[string][]string),
 	}
 	req.Header.Add(onfido.WebhookSignatureHeader, "d2ef30601350308c1f1c25c5fbf359badb95cbfb")
-	req.Body = ioutil.NopCloser(bytes.NewBuffer([]byte("{\"msg\": \"hello world\"}")))
+	req.Body = io.NopCloser(bytes.NewBuffer([]byte("{\"msg\": \"hello world\"}")))
 
 	wh := onfido.Webhook{Token: "abc123"}
 	_, err := wh.ParseFromRequest(req)

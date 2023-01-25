@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -167,7 +168,7 @@ func TestDo_InvalidStatusCode_InvalidJsonParsed(t *testing.T) {
 		StatusCode: http.StatusBadGateway,
 	}
 	resp.Header.Add("Content-Type", "application/json")
-	resp.Body = ioutil.NopCloser(bytes.NewBuffer([]byte("hello")))
+	resp.Body = io.NopCloser(bytes.NewBuffer([]byte("hello")))
 
 	client := NewClient("123")
 	client.HTTPClient = &stubbedHTTPClient{resp: resp}
@@ -232,7 +233,7 @@ func TestDo_InvalidStatusCode_JsonParsed(t *testing.T) {
 
 func TestDo_InvalidJsonResponse(t *testing.T) {
 	resp := &http.Response{StatusCode: http.StatusOK}
-	resp.Body = ioutil.NopCloser(bytes.NewBuffer([]byte("hello")))
+	resp.Body = io.NopCloser(bytes.NewBuffer([]byte("hello")))
 
 	client := NewClient("123")
 	client.HTTPClient = &stubbedHTTPClient{resp: resp}
@@ -246,7 +247,7 @@ func TestDo_InvalidJsonResponse(t *testing.T) {
 func Test_handleResponseErr(t *testing.T) {
 	response := http.Response{
 		Header: map[string][]string{"Content-Type": {"application/json"}},
-		Body: ioutil.NopCloser(bytes.NewReader([]byte(
+		Body: io.NopCloser(bytes.NewReader([]byte(
 			`{
 				"error":{
 					"type":"validation_error",

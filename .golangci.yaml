@@ -1,0 +1,199 @@
+# This file contains all available configuration options
+# with their default values.
+
+# options for analysis running
+run:
+  # default concurrency is a available CPU number
+  concurrency: 4
+
+  # timeout for analysis, e.g. 30s, 5m, default is 1m
+  timeout: 5m
+
+  # exit code when at least one issue was found, default is 1
+  issues-exit-code: 1
+
+  # include test files or not, default is true
+  tests: true
+
+  # default is true. Enables skipping of directories:
+  #   vendor$, third_party$, testdata$, examples$, Godeps$, builtin$
+  skip-dirs-use-default: true
+
+  # by default isn't set. If set we pass it to "go list -mod={option}". From "go help modules":
+  # If invoked with -mod=readonly, the go command is disallowed from the implicit
+  # automatic updating of go.mod described above. Instead, it fails when any changes
+  # to go.mod are needed. This setting is most useful to check that go.mod does
+  # not need updates, such as in a continuous integration and testing system.
+  # If invoked with -mod=vendor, the go command assumes that the vendor
+  # directory holds the correct copies of dependencies and ignores
+  # the dependency descriptions in go.mod.
+  #modules-download-mode: vendor
+
+# output configuration options
+output:
+  # colored-line-number|line-number|json|tab|checkstyle|code-climate|junit-xml|github-actions
+  # default is "colored-line-number"
+  format: colored-line-number
+
+  # print lines of code with issue, default is true
+  print-issued-lines: true
+
+  # print linter name in the end of issue text, default is true
+  print-linter-name: true
+
+  # make issues output unique by line, default is true
+  uniq-by-line: true
+
+  # add a prefix to the output file references; default is no prefix
+  path-prefix: ""
+
+  # sorts results by: filepath, line and column
+  sort-results: false
+
+
+# all available settings of specific linters
+linters-settings:
+
+  cyclop:
+    # the maximal code complexity to report
+    max-complexity: 10
+    # the maximal average package complexity. If it's higher than 0.0 (float) the check is enabled (default 0.0)
+    package-average: 6.0
+    # should ignore tests (default false)
+    skip-tests: false
+
+  dogsled:
+    # checks assignments with too many blank identifiers; default is 2
+    max-blank-identifiers: 2
+
+  dupl:
+    # tokens count to trigger issue, 150 by default
+    threshold: 100
+
+  errcheck:
+    # report about not checking of errors in type assertions: `a := b.(MyStruct)`;
+    # default is false: such cases aren't reported by default.
+    check-type-assertions: false
+
+    # report about assignment of errors to blank identifier: `num, _ := strconv.Atoi(numStr)`;
+    # default is false: such cases aren't reported by default.
+    check-blank: false
+
+    # [deprecated] comma-separated list of pairs of the form pkg:regex
+    # the regex is used to ignore names within pkg. (default "fmt:.*").
+    # see https://github.com/kisielk/errcheck#the-deprecated-method for details
+    ignore: fmt:.*,io/ioutil:^Read.*
+
+  exhaustive:
+    # check switch statements in generated files also
+    check-generated: false
+    # indicates that switch statements are to be considered exhaustive if a
+    # 'default' case is present, even if all enum members aren't listed in the
+    # switch
+    default-signifies-exhaustive: false
+
+  forbidigo:
+    # Forbid the following identifiers (identifiers are written using regexp):
+    forbid:
+      - ^print.*$
+#      - 'fmt\.Print.*'
+    # Exclude godoc examples from forbidigo checks.  Default is true.
+    exclude_godoc_examples: true
+
+  goconst:
+    # minimal length of string constant, 3 by default
+    min-len: 3
+    # minimal occurrences count to trigger, 3 by default
+    min-occurrences: 3
+
+  gosimple:
+    # Select the Go version to target. The default is '1.13'.
+    go: "1.19"
+    # https://staticcheck.io/docs/options#checks
+    checks: [ "all" ]
+
+  lll:
+    # max line length, lines longer will be reported. Default is 120.
+    # '\t' is counted as 1 character by default, and can be changed with the tab-width option
+    line-length: 120
+    # tab width in spaces. Default to 1.
+    tab-width: 1
+
+  nakedret:
+    # make an issue if func has more lines of code than this setting and it has naked returns; default is 30
+    max-func-lines: 20
+
+  nolintlint:
+    # Enable to ensure that nolint directives are all used. Default is true.
+    allow-unused: false
+    # Disable to ensure that nolint directives don't have a leading space. Default is true.
+    allow-leading-space: true
+    # Exclude following linters from requiring an explanation.  Default is [].
+    allow-no-explanation: []
+    # Enable to require an explanation of nonzero length after each nolint directive. Default is false.
+    require-explanation: true
+    # Enable to require nolint directives to mention the specific linter being suppressed. Default is false.
+    require-specific: true
+
+  staticcheck:
+    # Select the Go version to target. The default is '1.13'.
+    go: "1.19"
+    # https://staticcheck.io/docs/options#checks
+    checks: [ "all" ]
+
+  stylecheck:
+    # Select the Go version to target. The default is '1.13'.
+    go: "1.19"
+    # https://staticcheck.io/docs/options#checks
+    checks: [ "all", "-ST1000", "-ST1003", "-ST1016", "-ST1020", "-ST1021", "-ST1022" ]
+    # https://staticcheck.io/docs/options#dot_import_whitelist
+    dot-import-whitelist:
+      - fmt
+    # https://staticcheck.io/docs/options#initialisms
+    initialisms: [ "ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP", "HTTPS", "ID", "IP", "JSON", "QPS", "RAM", "RPC", "SLA", "SMTP", "SQL", "SSH", "TCP", "TLS", "TTL", "UDP", "UI", "GID", "UID", "UUID", "URI", "URL", "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS" ]
+    # https://staticcheck.io/docs/options#http_status_code_whitelist
+    http-status-code-whitelist: [ "200", "400", "404", "500" ]
+
+  unused:
+    # Select the Go version to target. The default is '1.13'.
+    go: "1.19"
+
+  whitespace:
+    multi-if: true   # Enforces newlines (or comments) after every multi-line if statement
+    multi-func: true # Enforces newlines (or comments) after every multi-line function signature
+
+  wrapcheck:
+    # An array of strings that specify substrings of signatures to ignore.
+    # If this set, it will override the default set of ignored signatures.
+    # See https://github.com/tomarrell/wrapcheck#configuration for more information.
+    ignoreSigs:
+      - .Errorf(
+      - errors.New(
+      - errors.Unwrap(
+      - .Wrap(
+      - .Wrapf(
+      - .WithMessage(
+      - .WithMessagef(
+
+linters:
+  enable:
+    - cyclop
+    - dogsled
+    - dupl
+    - errcheck
+    - exhaustive
+    - forbidigo
+    - goconst
+    - gocritic
+    - godox
+    - goimports
+    - gosec
+    - gosimple
+    - lll
+    - logrlint
+    - nakedret
+    - revive
+    - staticcheck
+    - stylecheck
+    - unused
+    - whitespace
